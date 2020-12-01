@@ -1,0 +1,72 @@
+<ion-header [ngClass]="dark ? '' : 'bg-whitesmoke'">
+  <ion-toolbar color="primary"
+    style="height: 100px; display: flex; padding: 0 10%; align-items: flex-start; border-bottom-left-radius: 60px;">
+    <ion-title class="font-size-30 padding-left-0" slot="start">
+      devjobs
+    </ion-title>
+    <ion-icon slot="end" name="sunny-outline"></ion-icon>
+    <ion-toggle slot="end" color="light" [(ngModel)]="dark" (ionChange)="toggleTheme($event)"></ion-toggle>
+    <ion-icon slot="end" name="moon-outline"></ion-icon>
+  </ion-toolbar>
+
+  <ion-row style="position: fixed; margin: 0 10%; width: 80%; z-index: 2000; background-color: white; top: 70px;">
+    <ng-container *ngIf="deviceType == 'desktop'">
+      <ion-col size="4" style="border: 1px solid lightgrey;">
+        <ion-item lines="none">
+          <ion-icon name="search-outline"></ion-icon>
+          <ion-input type="text" [(ngModel)]="searchText" placeholder="Filter by title, companies, experties..."
+            (ionChange)="search('text')" debounce="500"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="4" style="border: 1px solid lightgrey;">
+        <ion-item lines="none">
+          <ion-icon name="location-outline"></ion-icon>
+          <ion-input type="text" [(ngModel)]="searchLoc" placeholder="Filter by location..." (ionChange)="search('loc')" debounce="500">
+          </ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="4" style="border: 1px solid lightgrey;">
+        <ion-item lines="none">
+          <ion-checkbox style="margin: 0;" [(ngModel)]="fullTime" (ionChange)="searchFullTime()"></ion-checkbox>
+          <ion-label class="ion-padding-start">Full Time Only</ion-label>
+        </ion-item>
+      </ion-col>
+    </ng-container>
+    <ng-container *ngIf="deviceType == 'mobile'">
+      <ion-col style="border: 1px solid lightgrey;">
+        <ion-item lines="none">
+          <ion-icon name="search-outline"></ion-icon>
+          <ion-input type="text" [(ngModel)]="searchText" placeholder="Filter by title, companies..." (ionChange)="search('text')"
+            debounce="500"></ion-input>
+          <!-- <ion-icon name="funnel"></ion-icon> -->
+        </ion-item>
+      </ion-col>
+    </ng-container>
+  </ion-row>
+</ion-header>
+
+<ion-content [ngClass]="dark ? '' : 'bg-whitesmoke'">
+  <!-- <ion-grid></ion-grid> -->
+  <ion-list [ngClass]="dark ? '' : 'bg-whitesmoke'"
+    style="margin-top: 50px; display: flex; flex-flow: wrap; justify-content: center; padding: 0 8%">
+    <ion-card (click)="cardClicked(job)" class="grid" *ngFor="let job of jobs"
+      style="min-height: 150px; min-width: 300px; max-width: 300px;">
+      <ion-img [src]="job.company_logo ? job.company_logo : '/assets/icon/no-logo.jpg'" style="height: 130px"></ion-img>
+      <ion-card-header style="min-height: 125px;">
+        <ion-card-subtitle>{{ job.created_at | date }} | {{job.type}}</ion-card-subtitle>
+        <ion-card-title>{{job.title}}</ion-card-title>
+        <ion-card-subtitle> {{job.company}} </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p class="color-purple font-size-12">
+          {{job.location}}
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

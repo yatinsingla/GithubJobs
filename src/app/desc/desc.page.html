@@ -1,0 +1,128 @@
+<ion-header [ngClass]="dark ? '' : 'bg-whitesmoke'">
+  <ion-toolbar color="primary"
+    style="height: 100px; display: flex; padding: 0 10%; align-items: flex-start; border-bottom-left-radius: 60px;">
+    <ion-title class="font-size-30 padding-left-0" slot="start">
+      devjobs
+    </ion-title>
+    <ion-icon slot="end" name="sunny-outline"></ion-icon>
+    <ion-toggle slot="end" color="light" [(ngModel)]="dark" (ionChange)="toggleTheme($event)"></ion-toggle>
+    <ion-icon slot="end" name="moon-outline"></ion-icon>
+  </ion-toolbar>
+
+  <ion-row [ngStyle]="{'padding': deviceType == 'mobile' ? '0 10%': '0 20%' }"
+    class="position-fixed margin-auto width-100 z-index-2000 top-70">
+    <ion-col class="ion-no-padding">
+      <ion-card
+        [ngStyle]="{'flex-direction': deviceType == 'mobile' ? 'column' : '', 'align-items': deviceType == 'mobile' ? 'center' : '' }">
+        <ng-container *ngIf="deviceType == 'desktop'">
+          <ion-row>
+            <ion-col size="2" class="ion-no-padding">
+              <ion-img class="height-100px" [src]="jobDesc.company_logo ? jobDesc.company_logo : '/assets/icon/no-logo.jpg'"></ion-img>
+            </ion-col>
+            <ion-col size="8">
+              <ion-card-header>
+                <ion-card-title>{{jobDesc.title}}</ion-card-title>
+                <ion-card-subtitle>{{jobDesc.company}}</ion-card-subtitle>
+              </ion-card-header>
+            </ion-col>
+            <ion-col size="2">
+              <ion-button class="width-100" [href]="jobDesc.company_url">Company site</ion-button>
+            </ion-col>
+          </ion-row>
+        </ng-container>
+        <ng-container *ngIf="deviceType == 'mobile'">
+          <ion-img class="height-50px" [src]="jobDesc.company_logo ? jobDesc.company_logo : '/assets/icon/no-logo.jpg'"></ion-img>
+          <ion-card-header>
+            <ion-card-title>{{jobDesc.title}}</ion-card-title>
+            <ion-card-subtitle>{{jobDesc.company}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-button class="width-100" [href]="jobDesc.company_url">Company site</ion-button>
+          </ion-card-content>
+        </ng-container>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-header>
+
+<ion-content [ngClass]="dark ? '' : 'bg-whitesmoke'">
+
+  <ion-grid class="ion-no-padding"
+    [ngStyle]="{'margin-top': deviceType == 'mobile' ? '225px' : '100px', 'margin-left': deviceType == 'mobile' ? '' : '15px'}">
+    <ion-row [ngStyle]="{'padding': deviceType == 'mobile' ? '0 10%': '0 20%' }" class="margin-auto width-100">
+      <ion-col class="ion-no-padding">
+        <ion-card>
+          <ion-card-header>
+            <ion-row>
+              <ion-col>
+                <ion-card-subtitle>{{ jobDesc.created_at | date }} | {{jobDesc.type}}</ion-card-subtitle>
+                <ion-card-title>{{jobDesc.title}}</ion-card-title>
+                <ion-card-subtitle class="color-purple font-size-12"> {{jobDesc.location }} </ion-card-subtitle>
+                <ion-button *ngIf="deviceType == 'mobile'" class="width-100" [href]="jobDesc.url">Apply Now</ion-button>
+              </ion-col>
+              <ion-col *ngIf="deviceType == 'desktop'" size="2">
+                <ion-button class="width-100" [href]="jobDesc.url">Apply Now</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-card-header>
+          <ion-card-content>
+            <!-- {{jobDesc.description}} -->
+            <div [innerHTML]="jobDesc.description"></div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="ion-no-padding" [ngStyle]="{'margin-left': deviceType == 'mobile' ? '' : '15px'}" class="margin-top-25">
+    <ion-row [ngStyle]="{'padding': deviceType == 'mobile' ? '0 10%': '0 20%' }" class="margin-auto width-100">
+      <ion-col class="ion-no-padding">
+        <ion-card style="--background: #5865E0; --color: white">
+          <ion-card-header>
+            <ion-card-title style="--color: white">How to Apply</ion-card-title>
+            <ion-card-subtitle style="--color: white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit numquam explicabo
+              tenetur corrupti,
+              consequuntur provident repellendus minus labore sapiente magni, inventore, eum reprehenderit officiis adipisci architecto.
+              Voluptas tenetur modi perferendis.</ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-content>
+            <div [innerHTML]="jobDesc.how_to_apply" class="a-tag"></div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="ion-no-padding" [ngStyle]="{'margin-left': deviceType == 'mobile' ? '' : '15px'}" class="margin-top-25">
+    <ion-row [ngStyle]="{'padding': deviceType == 'mobile' ? '0 10%': '0 20%' }" class="margin-auto width-100">
+      <ion-col class="ion-no-padding">
+        <ion-card>
+          <ion-row>
+            <ion-col>
+              <ion-row>
+                <ion-col>
+                  <ion-card-header>
+                    <ion-card-title>{{jobDesc.title}}</ion-card-title>
+                    <ion-card-subtitle>{{jobDesc.company}}</ion-card-subtitle>
+                    <ion-button *ngIf="deviceType == 'mobile'" class="width-100">Apply Now</ion-button>
+                  </ion-card-header>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col *ngIf="deviceType == 'desktop'" size="2">
+              <ion-card-content>
+                <ion-button class="width-100" [href]="jobDesc.url">Apply Now</ion-button>
+              </ion-card-content>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+<ion-footer>
+
+</ion-footer>
