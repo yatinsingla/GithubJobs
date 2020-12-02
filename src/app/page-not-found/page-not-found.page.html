@@ -1,0 +1,17 @@
+<ion-header [ngClass]="dark ? '' : 'bg-whitesmoke'">
+  <ion-toolbar color="primary"
+    style="height: 100px; display: flex; padding: 0 10%; align-items: flex-start; border-bottom-left-radius: 60px;">
+    <ion-title class="font-size-30 padding-left-0" slot="start">
+      Page not found
+    </ion-title>
+    <ion-icon slot="end" name="sunny-outline"></ion-icon>
+    <ion-toggle slot="end" color="light" [(ngModel)]="dark" (ionChange)="toggleTheme()"></ion-toggle>
+    <ion-icon slot="end" name="moon-outline"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+
+</ion-content>

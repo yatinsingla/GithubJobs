@@ -69,4 +69,21 @@
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
+
+  <div *ngIf="enableCors" [ngClass]="dark ? '' : 'bg-whitesmoke'"
+    style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+    <ion-item lines="none" style="--background: inherit">
+      <ion-title>CORS Issue</ion-title>
+    </ion-item>
+    <ion-item lines="none" style="--background: inherit">
+      <ion-label style="white-space: normal; text-align: center;">As Client is directly trying to access API without backend, CORS needs to
+        be handled through
+        client. Please install the CORS extension, enable it for API to work and reload the application.</ion-label>
+    </ion-item>
+    <ion-item lines="none" style="--background: inherit">
+      <a target="_blank"
+        href="https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=en">Add
+        Cors Extension for Chrome</a>
+    </ion-item>
+  </div>
 </ion-content>

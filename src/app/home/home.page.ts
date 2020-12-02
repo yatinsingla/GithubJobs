@@ -21,6 +21,7 @@ export class HomePage implements OnInit {
   searchLoc: string = '';
   fullTime: boolean = false;
   deviceType: any;
+  enableCors: boolean = false;
 
   constructor(
     private githubService: GithubService,
@@ -45,6 +46,7 @@ export class HomePage implements OnInit {
     this.deviceType = this.utilityService.deviceType();
     console.log("type: ", this.deviceType)
     this.getData(false, "");
+    this.enableCors = false;
   }
 
   async getData(isFirstLoad, event, searchText = '', searchLoc = '', fullTime = this.fullTime) {
@@ -52,12 +54,17 @@ export class HomePage implements OnInit {
     this.githubService.getjobs(this.page_number, searchText, searchLoc, fullTime).subscribe(
       async (res: any) => {
       console.log(res)
+      this.enableCors = false;
       this.jobs.push(...res);
 
       if(isFirstLoad) 
         event.target.complete();
       
       this.page_number++;
+      await this.utilityService.dismissloader();
+    },
+    async (err) => {
+      this.enableCors = true;
       await this.utilityService.dismissloader();
     })
   }
@@ -71,13 +78,6 @@ export class HomePage implements OnInit {
   }
 
   search(type) {
-    // let searchText;
-    // type == 'text' ? searchText = this.searchText.trim() : searchText = this.searchLoc.trim();
-
-    // if(!searchText) {
-    //   return;
-    // }
-
     this.jobs = [];
     this.page_number = 1;
     this.getData(false, '', this.searchText, this.searchLoc)

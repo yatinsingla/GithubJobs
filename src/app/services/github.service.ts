@@ -17,6 +17,7 @@ export class GithubService {
     } if(fulltime) {
       url = url.concat(`&full_time=${fulltime}`)
     }
-    return this.httpClient.get(url);
+    return this.httpClient.get(url)
+    // return this.httpClient.post('https://0xwdwsp4bb.execute-api.us-east-1.amazonaws.com/dev/getPositions', {'url': 'https://jobs.github.com/positions.json'}, {params: {'page': pageNum, 'search': searchText, 'location': searchLoc, 'fulltime': fulltime} });
   }
 }
